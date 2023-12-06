@@ -7,6 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+word2number = "^1.1"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^69.0.2"
