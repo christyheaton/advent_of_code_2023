@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "advent-of-code-2023"
+version = "0.1.0"
+description = ""
+authors = ["christyheaton <christyheaton@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+setuptools = "^69.0.2"
+ruff = "^0.1.7"
+black = "^23.11.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "B", "I"]
