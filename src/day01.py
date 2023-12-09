@@ -26,25 +26,28 @@ def find_digits_or_spelled(input_str: str):
     order_tracking = {}
     for item in temp_result:
         order_tracking[input_str.find(item)] = item
+        order_tracking[input_str.rfind(item)] = item
     sorted_dict = OrderedDict(sorted(order_tracking.items()))
-
-    print(sorted_dict)
-    return temp_result
+    for k, v in sorted_dict.items():
+        sorted_dict[k] = w2n.word_to_num(v)
+    listed_items = list(sorted_dict.items())
+    result = int(str(listed_items[0][-1]) + str(listed_items[-1][-1]))
+    return result
 
 
 def main():
-    with open("../data/day01_test_pt1.txt") as file:
+    with open("../data/day01_input.txt") as file:
         lines = [line.rstrip() for line in file]
-    count = 0
+    pt1_count = 0
     for line in lines:
         digits = find_digits(line)
-        count += digits
-    print(f"Part 1 solution: {count}.")
+        pt1_count += digits
+    print(f"Part 1 solution: {pt1_count}.")
 
-    # for line in lines:
-        # print(line)
-        # find_digits_or_spelled(line)
-    # print(f"Part 2 solution: {count}.")
+    pt2_count = 0
+    for line in lines:
+        pt2_count += find_digits_or_spelled(line)
+    print(f"Part 2 solution: {pt2_count}.")
 
 
 if __name__ == "__main__":
