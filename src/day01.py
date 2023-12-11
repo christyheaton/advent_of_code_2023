@@ -52,7 +52,7 @@ def find_first_last_digits_or_spelled(input_str: str) -> int:
     return result
 
 
-def main():
+def main() -> None:
     with open("../data/day01_input.txt") as file:
         lines = [line.rstrip() for line in file]
 
