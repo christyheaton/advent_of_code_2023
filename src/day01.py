@@ -1,14 +1,22 @@
 from collections import OrderedDict
+
 from word2number import w2n
 
 
-def find_digits(input_str: str) -> int:
+def find_first_last_digits(input_str: str) -> int:
+    """
+    :param input_str: a string containing at least one digit
+    :return: the fist and last digits in the input_str
+    """
     nums = [i for i in input_str if i.isdigit()]
     return int(nums[0] + nums[-1])
 
 
-def find_digits_or_spelled(input_str: str):
-    arr = [
+def get_number_list() -> list[str]:
+    """
+    :return: a list of numbers relevant to this challenge
+    """
+    nums = [
         "zero",
         "one",
         "two",
@@ -21,7 +29,16 @@ def find_digits_or_spelled(input_str: str):
         "nine",
     ]
     for i in range(10):
-        arr.append(str(i))
+        nums.append(str(i))
+    return nums
+
+
+def find_first_last_digits_or_spelled(input_str: str) -> int:
+    """
+    :param input_str: a string containing at least one digit or spelled out number
+    :return: the fist and last numbers in the input_str
+    """
+    arr = get_number_list()
     temp_result = [ele for ele in arr if ele in input_str]
     order_tracking = {}
     for item in temp_result:
@@ -38,15 +55,15 @@ def find_digits_or_spelled(input_str: str):
 def main():
     with open("../data/day01_input.txt") as file:
         lines = [line.rstrip() for line in file]
+
     pt1_count = 0
     for line in lines:
-        digits = find_digits(line)
-        pt1_count += digits
+        pt1_count += find_first_last_digits(line)
     print(f"Part 1 solution: {pt1_count}.")
 
     pt2_count = 0
     for line in lines:
-        pt2_count += find_digits_or_spelled(line)
+        pt2_count += find_first_last_digits_or_spelled(line)
     print(f"Part 2 solution: {pt2_count}.")
 
 
