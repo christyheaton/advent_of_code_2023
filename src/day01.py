@@ -36,20 +36,24 @@ def get_number_list() -> list[str]:
 def find_first_last_digits_or_spelled(input_str: str) -> int:
     """
     :param input_str: a string containing at least one digit or spelled out number
-    :return: the fist and last numbers in the input_str
+    :return: the first and last numbers in the input_str
     """
     arr = get_number_list()
     temp_result = [ele for ele in arr if ele in input_str]
-    order_tracking = {}
+
+    order_tracking = OrderedDict()
     for item in temp_result:
+        # find the first
         order_tracking[input_str.find(item)] = item
+        # find the last
         order_tracking[input_str.rfind(item)] = item
+
     sorted_dict = OrderedDict(sorted(order_tracking.items()))
     for k, v in sorted_dict.items():
         sorted_dict[k] = w2n.word_to_num(v)
+
     listed_items = list(sorted_dict.items())
-    result = int(str(listed_items[0][-1]) + str(listed_items[-1][-1]))
-    return result
+    return int(str(listed_items[0][-1]) + str(listed_items[-1][-1]))
 
 
 def main() -> None:
