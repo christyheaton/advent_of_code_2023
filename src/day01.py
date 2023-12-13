@@ -57,7 +57,7 @@ def find_first_last_digits_or_spelled(input_str: str) -> int:
 
 
 def main() -> None:
-    with open("../data/day01_input.txt") as file:
+    with open("../data/day01.txt") as file:
         lines = [line.rstrip() for line in file]
 
     pt1_count = 0
