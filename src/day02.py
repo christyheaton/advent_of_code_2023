@@ -1,6 +1,11 @@
 
 
-def check_possible(input_str):
+def check_possible(input_str: str) -> bool:
+    """
+    Check if the game is possible under the conditions
+    :param input_str: several games
+    :return: True if the game is possible, otherwise False
+    """
     maximums = {"red": 12, "green": 13, "blue": 14}
 
     games = input_str.split(": ")[1:]

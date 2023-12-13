@@ -1,4 +1,5 @@
 import pytest
+
 from src.day02 import check_possible
 
 
@@ -12,6 +13,9 @@ def test_input() -> str:
 
 
 def test_part01(test_input: str) -> None:
+    """
+    Test day 1 sample data runs successfully
+    """
     count = 0
     for line in test_input.split("\n"):
         game_id = int(line.split(":")[0].split()[-1])
