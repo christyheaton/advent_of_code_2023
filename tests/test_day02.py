@@ -1,6 +1,6 @@
 import pytest
 
-from src.day02 import check_possible
+from src.day02 import check_possible, get_game_power
 
 
 @pytest.fixture
@@ -13,12 +13,17 @@ def test_input() -> str:
 
 
 def test_part01(test_input: str) -> None:
-    """
-    Test day 1 sample data runs successfully
-    """
     count = 0
     for line in test_input.split("\n"):
         game_id = int(line.split(":")[0].split()[-1])
         if check_possible(line):
             count += game_id
     assert count == 8
+
+
+def test_part02(test_input: str) -> None:
+    count = 0
+    for line in test_input.split("\n"):
+        power = get_game_power(line)
+        count += power
+    assert count == 2286

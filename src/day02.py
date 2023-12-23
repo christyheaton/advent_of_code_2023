@@ -20,6 +20,25 @@ def check_possible(input_str: str) -> bool:
     return True
 
 
+def get_game_power(input_str):
+    maximums = {"red": 0, "green": 0, "blue": 0}
+    games = input_str.split(": ")[1:]
+    for game in games:
+        rounds = game.split(";")
+        for r in rounds:
+            cubes = r.split(",")
+            for cube in cubes:
+                count, color = cube.split()
+                if int(count) > maximums[color]:
+                    maximums[color] = int(count)
+    product = 1
+
+    for value in maximums.values():
+        product *= value
+
+    return product
+
+
 def main() -> None:
     with open("../data/day02.txt") as file:
         lines = [line.rstrip() for line in file]
@@ -30,6 +49,12 @@ def main() -> None:
         if check_possible(line):
             count += game_id
     print(f"Part 1 solution: {count}")
+
+    count = 0
+    for line in lines:
+        power = get_game_power(line)
+        count += power
+    print(f"Part 2 solution: {count}")
 
 
 if __name__ == "__main__":
