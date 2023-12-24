@@ -20,8 +20,13 @@ def check_possible(input_str: str) -> bool:
     return True
 
 
-def get_game_power(input_str):
-    maximums = {"red": 0, "green": 0, "blue": 0}
+def get_game_power(input_str) -> int:
+    """
+    Get game power using minimum number of each color
+    :param input_str: multiple games
+    :return: power value of all games in set
+    """
+    minimums = {"red": 0, "green": 0, "blue": 0}
     games = input_str.split(": ")[1:]
     for game in games:
         rounds = game.split(";")
@@ -29,11 +34,11 @@ def get_game_power(input_str):
             cubes = r.split(",")
             for cube in cubes:
                 count, color = cube.split()
-                if int(count) > maximums[color]:
-                    maximums[color] = int(count)
+                if int(count) > minimums[color]:
+                    minimums[color] = int(count)
     product = 1
 
-    for value in maximums.values():
+    for value in minimums.values():
         product *= value
 
     return product
