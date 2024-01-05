@@ -1,3 +1,19 @@
+class Game:
+    def __init__(self, line: str):
+        self.game_id = int((line.split(":")[0].split()[-1]))
+        game_data = line.split(": ")[1]
+        self.round_data = game_data.split(";")
+        self.rounds = []
+        self.parse_round()
+
+    def parse_round(self):
+        for r in self.round_data:
+            round_dict = {}
+            cubes = r.split(",")
+            for cube in cubes:
+                count, color = cube.split()
+                round_dict[color] = int(count)
+            self.rounds.append(round_dict)
 
 
 def check_possible(input_str: str) -> bool:
@@ -20,7 +36,7 @@ def check_possible(input_str: str) -> bool:
     return True
 
 
-def get_game_power(input_str) -> int:
+def get_game_power(input_str: str) -> int:
     """
     Get game power using minimum number of each color
     :param input_str: multiple games
@@ -47,6 +63,11 @@ def get_game_power(input_str) -> int:
 def main() -> None:
     with open("../data/day02.txt") as file:
         lines = [line.rstrip() for line in file]
+
+    for line in lines:
+        game = Game(line)
+        print(game.game_id)
+        print(game.rounds)
 
     count = 0
     for line in lines:
