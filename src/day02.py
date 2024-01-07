@@ -15,72 +15,49 @@ class Game:
                 round_dict[color] = int(count)
             self.rounds.append(round_dict)
 
-
-def check_possible(input_str: str) -> bool:
-    """
-    Check if the game is possible under the conditions
-    :param input_str: several games
-    :return: True if the game is possible, otherwise False
-    """
-    maximums = {"red": 12, "green": 13, "blue": 14}
-
-    games = input_str.split(": ")[1:]
-    for game in games:
-        rounds = game.split(";")
-        for r in rounds:
-            cubes = r.split(",")
-            for cube in cubes:
-                count, color = cube.split()
-                if maximums[color] < int(count):
+    def check_possible(self) -> bool:
+        maximums = {"red": 12, "green": 13, "blue": 14}
+        for r in self.rounds:
+            for color in ["red", "green", "blue"]:
+                if not r.get(color):
+                    continue
+                if maximums[color] < r[color]:
                     return False
-    return True
+        return True
 
+    def get_game_power(self) -> int:
+        minimums = {"red": 0, "green": 0, "blue": 0}
+        for r in self.rounds:
+            for color in ["red", "green", "blue"]:
+                if not r.get(color):
+                    continue
+                if int(r[color]) > minimums[color]:
+                    minimums[color] = int(r[color])
 
-def get_game_power(input_str: str) -> int:
-    """
-    Get game power using minimum number of each color
-    :param input_str: multiple games
-    :return: power value of all games in set
-    """
-    minimums = {"red": 0, "green": 0, "blue": 0}
-    games = input_str.split(": ")[1:]
-    for game in games:
-        rounds = game.split(";")
-        for r in rounds:
-            cubes = r.split(",")
-            for cube in cubes:
-                count, color = cube.split()
-                if int(count) > minimums[color]:
-                    minimums[color] = int(count)
-    product = 1
+        product = 1
 
-    for value in minimums.values():
-        product *= value
+        for value in minimums.values():
+            product *= value
 
-    return product
+        return product
 
 
 def main() -> None:
     with open("../data/day02.txt") as file:
         lines = [line.rstrip() for line in file]
 
+    possible_count = 0
+    game_power_count = 0
+
     for line in lines:
         game = Game(line)
-        print(game.game_id)
-        print(game.rounds)
+        if game.check_possible():
+            possible_count += game.game_id
+        power = game.get_game_power()
+        game_power_count += power
 
-    count = 0
-    for line in lines:
-        game_id = int((line.split(":")[0].split()[-1]))
-        if check_possible(line):
-            count += game_id
-    print(f"Part 1 solution: {count}")
-
-    count = 0
-    for line in lines:
-        power = get_game_power(line)
-        count += power
-    print(f"Part 2 solution: {count}")
+    print(f"Part 1 solution: {possible_count}")
+    print(f"Part 2 solution: {game_power_count}")
 
 
 if __name__ == "__main__":
