@@ -5,7 +5,7 @@ class Card:
         self.data = self.parse_card()
         self.score = 0
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.id}: {self.score}"
 
     def parse_card(self) -> dict:
@@ -33,29 +33,20 @@ class CardCounter:
         self.card_counts = {}
         self.get_initial_card_counts()
 
-    def get_initial_card_counts(self):
+    def get_initial_card_counts(self) -> None:
         for card in self.cards:
             self.card_counts[int(card.id)] = 1
 
-    def count_cards(self):
+    def count_cards(self) -> int:
         for card in self.cards:
-            # print(f"Card {card.id} has {self.card_counts.get(card.id)} copies and score of {card.score}.")
-            score = card.score
-            for i in range(score):
-                current_index = card.id + (i+1)
-
-                if current_index > len(self.cards):
-                    continue
-                current_count = self.card_counts.get(current_index)
-                # print(f"Trying to modify card {current_index} with count of {current_count}")
-                self.card_counts[current_index] = current_count + 1
-                # print(f"Count is now: ", self.card_counts.get(current_index))
-        print(self.card_counts)
-            # return self.card_counts
+            wins = card.count_wins()
+            for i in range(card.id+1, card.id+wins+1):
+                self.card_counts[i] += self.card_counts[card.id]
+        return sum(self.card_counts.values())
 
 
 def main() -> None:
-    with open("../data/day04_test.txt") as file:
+    with open("../data/day04.txt") as file:
         lines = [line.rstrip() for line in file]
 
     cards = []
@@ -63,10 +54,8 @@ def main() -> None:
     for line in lines:
         c = Card(line)
         cards.append(c)
-        # print(c.id)
         total_score += c.calculate_score()
     print(f"Part 1: {total_score}")
-    # print(cards)
 
     counter = CardCounter(cards)
     print(f"Part 2: {counter.count_cards()}")
