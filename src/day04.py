@@ -40,7 +40,7 @@ class CardCounter:
     def count_cards(self) -> int:
         for card in self.cards:
             wins = card.count_wins()
-            for i in range(card.id+1, card.id+wins+1):
+            for i in range(card.id + 1, card.id + wins + 1):
                 self.card_counts[i] += self.card_counts[card.id]
         return sum(self.card_counts.values())
 
